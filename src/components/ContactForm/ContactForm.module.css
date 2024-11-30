@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.name {
+  margin-bottom: 15px;
+}
+
+.number {
+  margin-bottom: 10px;
+}
+
+.button {
+  width: 100px;
+  margin: auto;
+}
