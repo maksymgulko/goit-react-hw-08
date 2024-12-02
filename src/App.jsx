@@ -1,12 +1,12 @@
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { lazy, useEffect, Suspense } from "react";
+import { lazy, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 import { RestrictedRoute } from "./RestrictedRoute";
 import { PrivateRoute } from "./PrivateRoute";
 import { refreshUser } from "./redux/auth/operations";
-import { AppBar } from "./components/AppBar/AppBar";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,8 +25,7 @@ function App() {
     <b>Refreshing...</b>
   ) : (
     <div className="appForm">
-      <AppBar />
-      <Suspense fallback={<div>Loading page...</div>}>
+      <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
@@ -51,7 +50,7 @@ function App() {
             }
           />
         </Routes>
-      </Suspense>
+      </Layout>
     </div>
   );
 }
