@@ -1,6 +1,11 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact } from "./operations";
-import { selectNameFilter } from "../filters/selectors";
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  editContact,
+} from "./operations";
+import { selectNameFilter, selectNumberFilter } from "../filters/selectors";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -33,6 +38,18 @@ const slice = createSlice({
         state.error = null;
         state.items.push(action.payload);
       })
+      .addCase(editContact.pending, handlePending)
+      .addCase(editContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex(
+          (contact) => contact.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+      })
+      .addCase(editContact.rejected, handleRejected)
       .addCase(deleteContact.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
@@ -50,14 +67,15 @@ const slice = createSlice({
 export const selectContacts = (state) => state.contacts.items;
 
 export const selectFilteredContacts = createSelector(
-  [selectContacts, selectNameFilter],
-  (contacts, nameFilter) => {
-    return contacts.filter((item) =>
-      item.name.toLowerCase().includes(nameFilter.toLowerCase())
-    );
+  [selectContacts, selectNameFilter, selectNumberFilter],
+  (contacts, nameFilter, numberFilter) => {
+    return contacts.filter((item) => {
+      const name = item.name.toLowerCase().includes(nameFilter.toLowerCase());
+      const number = item.number.includes(numberFilter);
+
+      return name || number;
+    });
   }
 );
-
-// export const { addContact, deleteContact } = slice.actions;
 
 export default slice.reducer;
