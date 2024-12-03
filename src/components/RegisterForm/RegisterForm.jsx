@@ -33,14 +33,14 @@ const RegisterForm = () => {
         <Field type="text" name="name" id={nameId} className={s.name} />
         <ErrorMessage name="name" component="span" />
         <label htmlFor={emailId}>Email</label>
-        <Field type="email" name="email" id={emailId} className={s.name} />
+        <Field type="email" name="email" id={emailId} className={s.email} />
         <ErrorMessage name="name" component="span" />
         <label htmlFor={passwordId}>Password</label>
         <Field
           type="password"
           name="password"
           id={passwordId}
-          className={s.number}
+          className={s.password}
         />
         <ErrorMessage name="password" component="span" />
         <button className={s.button} type="submit">

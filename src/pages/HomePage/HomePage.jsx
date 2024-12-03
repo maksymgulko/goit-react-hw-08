@@ -1,4 +1,4 @@
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return <div>Contacts manager Home page!✌️</div>;
 };
 export default HomePage;
