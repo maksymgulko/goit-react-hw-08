@@ -43,13 +43,13 @@ const Contact = ({ name, number, id }) => {
     actions.resetForm();
   };
 
-  if (isEditing) {
-    return (
-      <Formik
-        initialValues={{ name, number }}
-        validationSchema={EditContactSchema}
-        onSubmit={handleEditSubmit}
-      >
+  return isEditing ? (
+    <Formik
+      initialValues={{ name, number }}
+      validationSchema={EditContactSchema}
+      onSubmit={handleEditSubmit}
+    >
+      {(props) => (
         <Form className={s.editForm}>
           <Field type="text" name="name" placeholder="Name" />
           <ErrorMessage name="name" component="span" />
@@ -58,17 +58,17 @@ const Contact = ({ name, number, id }) => {
           <ErrorMessage name="number" component="span" />
 
           <div>
-            <button type="submit">Save</button>
+            <button disabled={!props.dirty} type="submit">
+              Save
+            </button>
             <button type="button" onClick={() => setIsEditing(false)}>
               Cancel
             </button>
           </div>
         </Form>
-      </Formik>
-    );
-  }
-
-  return (
+      )}
+    </Formik>
+  ) : (
     <div className={s.listItem}>
       <div className={s.info}>
         <p className={s.text}>
@@ -83,10 +83,10 @@ const Contact = ({ name, number, id }) => {
       <button className={s.delete} type="button" onClick={handleDelete}>
         Delete
       </button>
+      <Toaster />
       <button onClick={() => setIsEditing(true)} type="button">
         <CiEdit />
       </button>
-      <Toaster />
     </div>
   );
 };

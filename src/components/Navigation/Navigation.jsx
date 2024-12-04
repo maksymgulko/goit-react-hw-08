@@ -18,8 +18,8 @@ export const Navigation = () => {
           Home
         </NavLink>
         {isLoggedIn && (
-          <NavLink className={buildLinkClass} to="/tasks">
-            Tasks
+          <NavLink className={buildLinkClass} to="/contacts">
+            Contacts
           </NavLink>
         )}
       </nav>
